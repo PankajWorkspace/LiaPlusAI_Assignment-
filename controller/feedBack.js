@@ -1,9 +1,9 @@
 const FeedBack = require("../model/feedBackSchema")
 
 exports.saveFeedback = async (req, res) => {
-    const { name, email, feedBackText, category } = req.body
+    const { name, email, message, category } = req.body
 
-    if (!name || !email || !feedBackText || !category) {
+    if (!name || !email || !message || !category) {
         return res.status(400).json({ message: "Data is Required" })
     }
 
@@ -15,15 +15,15 @@ exports.saveFeedback = async (req, res) => {
             feedData = new FeedBack({
                 name,
                 email,
-                feedbacks: [{ feedbackText: feedBackText, category }]
+                feedbacks: [{ feedbackText: message, category }]
             });
         } else {
-            feedData.feedbacks.push({ feedbackText: feedBackText, category });
+            feedData.feedbacks.push({ feedbackText: message, category });
         }
 
         await feedData.save();
 
-        return res.status(200).json({ message: "Data is saved", })
+        return res.status(200).json({ message: "Data is saved",})
     } catch (err) {
         console.log(err)
         return res.status(500).json({ message: "Internal Server error", error: err })
