@@ -34,7 +34,7 @@ exports.saveFeedback = async (req, res) => {
 exports.getFeedback = async (req, res) => {
 
     try {
-        const feedData = await FeedBack.find({})
+        const feedData = await FeedBack.find({}, "-_id")
 
         if (!feedData) {
             return res.status(404).json({ message: "No feedback is found with this email" })
